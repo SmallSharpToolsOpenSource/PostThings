@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "PostThings": {
+            "applicationId": "CHANGE ME", 
+            "masterKey": "CHANGE ME"
+        }, 
+        "_default": {
+            "link": "PostThings"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.12"
+    }
+}
