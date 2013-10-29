@@ -88,7 +88,11 @@ var log = function(message) {
         },
         
         fetchPostDetails : function(post, json) {
-            PT.fetchPostTags(post).then(function(tags) {
+            json.tags[post.id] = [];
+            json.likes[post.id] = [];
+            json.comments[post.id] = [];
+            
+            return PT.fetchPostTags(post).then(function(tags) {
                 json.tags[post.id] = tags;
                 return PT.fetchPostLikes(post);
             }).then(function(likes) {
@@ -112,8 +116,8 @@ var log = function(message) {
                 comments : {},
                 count : 0,
                 completed : false,
-                limit : (request.params.limit | 100),
-                skip : (request.params.skip | 0)
+                limit : (request.params.limit || 100),
+                skip : (request.params.skip || 0)
             };
             
             var handleSuccess = function() {
@@ -135,7 +139,7 @@ var log = function(message) {
             query.skip(json.skip);
             query.find().then(function(posts) {
                 json.posts = posts;
-                PT.eachItem(posts, fetchDetails);
+                return PT.eachItem(posts, fetchDetails);
             }).then(handleSuccess, handlerError);
         }
     };
