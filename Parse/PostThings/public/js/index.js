@@ -22,7 +22,9 @@ $(function() {
                 }
                 
                 response.posts.forEach(function(post) {
-                    $('#posts').append("<p>Post: " + post.get("text") + "</p>");
+                    var postOwner = post.get("owner");
+                    $('#posts').append("<p>Post: <b>" + post.get("text") + "</b> by " + 
+                                       postOwner.get("username") + "</p>");
                     var tags = response.tags[post.id];
                     var likes = response.likes[post.id];
                     var comments = response.comments[post.id];
@@ -33,8 +35,11 @@ $(function() {
                         $('#posts').append("<p>Like: " + like.get("username") + "</p>");
                     });
                     comments.forEach(function(comment) {
-                        $('#posts').append("<p>Comment: " + comment.get("text") + "</p>");
+                        var commentOwner = comment.get("owner");
+                        $('#posts').append("<p>Comment: " + comment.get("text") + " (" + 
+                                           commentOwner.get("username") + ")</p>");
                     });
+                    $('#posts').append("<hr />");
                 });
             },
             error : function(error) {

@@ -83,6 +83,7 @@ var log = function(message) {
 
         fetchPostComments : function(post) {
             var query = new Parse.Query(Comment);
+            query.include("owner");
             query.equalTo("post", post);
             return query.find();
         },
@@ -134,6 +135,7 @@ var log = function(message) {
             };
             
             var query = new Parse.Query("Post");
+            query.include("owner");
             query.descending("createdAt");
             query.limit(json.limit);
             query.skip(json.skip);
